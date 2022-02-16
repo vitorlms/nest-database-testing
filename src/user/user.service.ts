@@ -17,6 +17,10 @@ export class UserService {
   }
 
   async findAll() {
+    const userRespository = this.connection.getRepository(User);
+
+    return userRespository.find();
+
     return this.connection
       .createQueryBuilder()
       .select('u')
