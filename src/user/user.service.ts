@@ -56,17 +56,15 @@ export class UserService {
       user.name = 'test';
 
       // fazemos query de inserção de usuário
-      const userId = await this.connection
+      await this.connection
         .createQueryBuilder(queryRunner)
         .insert()
         .into(User)
         .values(user)
-        .returning(['id'])
         .execute();
 
       // verificamos que informações user possui
-      console.log('user entity', user);
-      console.log('userId returned from query', userId);
+      console.log('1 user entity', user);
 
       // chamamos o novo service
       await this.photoService.transactionTest(queryRunner, {
@@ -105,6 +103,120 @@ export class UserService {
       await this.photoService.transactionTest(queryRunner, {
         user: user,
         path: 'caminho2/de2/teste2/para2/foto2',
+      });
+
+      // commitamos a transação
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      console.log(err);
+      queryRunner.rollbackTransaction();
+    } finally {
+      queryRunner.release();
+    }
+  }
+
+  async transactionTest3() {
+    // usar conexão para criar um query runner
+    const queryRunner = this.connection.createQueryRunner();
+
+    // iniciar a transação do query runner
+    await queryRunner.startTransaction();
+    try {
+      // criamos entidade a ser utilizada pelas queries
+      const user = new User();
+      user.name = 'test';
+
+      // fazemos query de inserção de usuário
+      await this.connection
+        .createQueryBuilder(queryRunner)
+        .insert()
+        .into(User)
+        .values(user)
+        .execute();
+
+      // verificamos que informações user possui
+      console.log('3 user entity', user);
+
+      // chamamos o novo service
+      await this.photoService.transactionTest3(queryRunner, {
+        user: user,
+        path: 'caminho/de/teste/para/foto',
+      });
+
+      // commitamos a transação
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      console.log(err);
+      queryRunner.rollbackTransaction();
+    } finally {
+      queryRunner.release();
+    }
+  }
+
+  async transactionTest4() {
+    // usar conexão para criar um query runner
+    const queryRunner = this.connection.createQueryRunner();
+
+    // iniciar a transação do query runner
+    await queryRunner.startTransaction();
+    try {
+      // criamos entidade a ser utilizada pelas queries
+      const user = new User();
+      user.name = 'test';
+
+      // fazemos query de inserção de usuário
+      await this.connection
+        .createQueryBuilder(queryRunner)
+        .insert()
+        .into(User)
+        .values(user)
+        .execute();
+
+      // verificamos que informações user possui
+      console.log('4 user entity', user);
+
+      // chamamos o novo service
+      await this.photoService.transactionTest4(queryRunner, {
+        user: user,
+        path: 'caminho/de/teste/para/foto',
+      });
+
+      // commitamos a transação
+      await queryRunner.commitTransaction();
+    } catch (err) {
+      console.log('transaction error, rolling back...', err);
+      queryRunner.rollbackTransaction();
+    } finally {
+      queryRunner.release();
+    }
+  }
+
+  async transactionTest5() {
+    // usar conexão para criar um query runner
+    const queryRunner = this.connection.createQueryRunner();
+
+    // iniciar a transação do query runner
+    await queryRunner.startTransaction();
+    try {
+      // criamos entidade a ser utilizada pelas queries
+      const user = new User();
+      user.name = 'test';
+
+      // fazemos query de inserção de usuário
+      await this.connection
+        .createQueryBuilder(queryRunner)
+        .insert()
+        .into(User)
+        .values(user)
+        .execute();
+
+      // verificamos que informações user possui
+      console.log('5 user entity', user);
+
+      // chamamos o novo service
+      await this.photoService.transactionTest5(queryRunner, {
+        user: user,
+        path: 'caminho/de/teste/para/foto',
       });
 
       // commitamos a transação

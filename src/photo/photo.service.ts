@@ -36,7 +36,7 @@ export class PhotoService {
     queryRunner: QueryRunner,
     createPhotoDto: CreatePhotoDto,
   ) {
-    console.log('createPhotoDto', createPhotoDto);
+    console.log('createPhotoDto 1', createPhotoDto);
 
     await this.connection
       .createQueryBuilder(queryRunner)
@@ -50,12 +50,67 @@ export class PhotoService {
     queryRunner: QueryRunner,
     createPhotoDto: CreatePhotoDto,
   ) {
-    console.log('createPhotoDto', createPhotoDto);
+    console.log('createPhotoDto 2', createPhotoDto);
 
     const photo = new Photo();
     photo.user = createPhotoDto.user;
     photo.path = createPhotoDto.path;
 
     await queryRunner.manager.save(photo);
+  }
+
+  async transactionTest3(
+    queryRunner: QueryRunner,
+    createPhotoDto: CreatePhotoDto,
+  ) {
+    console.log('createPhotoDto 3', createPhotoDto);
+
+    throw Error('transaction test 3 error!');
+
+    await this.connection
+      .createQueryBuilder(queryRunner)
+      .insert()
+      .into(Photo)
+      .values(createPhotoDto)
+      .execute();
+  }
+
+  async transactionTest4(
+    queryRunner: QueryRunner,
+    createPhotoDto: CreatePhotoDto,
+  ) {
+    console.log('createPhotoDto 4', createPhotoDto);
+
+    await this.connection
+      .createQueryBuilder(queryRunner)
+      .insert()
+      .into(Photo)
+      .values(createPhotoDto)
+      .execute();
+
+    throw Error('transaction test 4 error!');
+  }
+
+  async transactionTest5(
+    queryRunner: QueryRunner,
+    createPhotoDto: CreatePhotoDto,
+  ) {
+    console.log('createPhotoDto 5', createPhotoDto);
+
+    await this.connection
+      .createQueryBuilder(queryRunner)
+      .insert()
+      .into(Photo)
+      .values(createPhotoDto)
+      .execute();
+
+    throw Error('transaction test 5 error!');
+
+    await this.connection
+      .createQueryBuilder(queryRunner)
+      .insert()
+      .into(Photo)
+      .values(createPhotoDto)
+      .execute();
   }
 }

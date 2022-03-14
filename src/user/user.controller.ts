@@ -24,6 +24,9 @@ export class UserController {
   async testTransaction() {
     await this.userService.transactionTest();
     await this.userService.transactionTest2();
+    // await this.userService.transactionTest3();
+    // await this.userService.transactionTest4();
+    // await this.userService.transactionTest5();
     return;
   }
 
