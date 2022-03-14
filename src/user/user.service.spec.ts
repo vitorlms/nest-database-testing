@@ -20,15 +20,19 @@ describe('UserService', () => {
     service = module.get<UserService>(UserService);
   });
 
+  afterEach(async () => {
+    await getConnection().close();
+  });
+
   it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  it('should return empty array', async () => {
-    expect(await service.findAll()).toEqual([]);
+  it('should create and save a new user', async () => {
+    expect(await service.create({ name: 'João da Silva' }));
   });
 
-  afterEach(async () => {
-    await getConnection().close();
+  it('should return empty array', async () => {
+    expect((await service.findAll()).length).toBeInstanceOf([]);
   });
 });
